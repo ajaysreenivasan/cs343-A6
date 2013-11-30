@@ -10,6 +10,6 @@ student.o: student.cc /usr/local/u++-6.0.0/inc/uC++.h \
  /usr/local/u++-6.0.0/inc/uCalendar.h /usr/local/u++-6.0.0/inc/uAlarm.h \
  /usr/local/u++-6.0.0/inc/uPIHeap.h /usr/local/u++-6.0.0/inc/uHeap.h \
  /usr/local/u++-6.0.0/inc/uC++.h /usr/local/u++-6.0.0/inc/uBaseSelector.h \
- /usr/local/u++-6.0.0/inc/uLocalDebugger.h student.h printer.h \
+ /usr/local/u++-6.0.0/inc/uLocalDebugger.h student.h MPRNG.h printer.h \
  nameServer.h watCardOffice.h bank.h watcard.h \
- /usr/local/u++-6.0.0/inc/uFuture.h
+ /usr/local/u++-6.0.0/inc/uFuture.h vendingMachine.h
