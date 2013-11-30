@@ -2,11 +2,17 @@
 
 using namespace std;
 
-void Student::main(){
-
+// constructor
+Student::Student( Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice, unsigned int id,
+				 unsigned int maxPurchases ):
+printer(prt),
+	nameServer(nameServer),
+	cardOffice(cardOffice)
+{
+	this->id = id;
+	this->maxPurchases = maxPurchases;
 }
 
-Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, unsigned int id,
-             unsigned int maxPurchases ){
+void Student::main(){
 
 }
