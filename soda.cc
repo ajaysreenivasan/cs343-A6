@@ -26,7 +26,7 @@ void processConfigFile( const char *configFile, ConfigParms &cparms );
 _Task Student {
     void main();
   public:
-    Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, unsigned int id,
+    Student( Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice, unsigned int id,
              unsigned int maxPurchases );
 };
 
@@ -52,7 +52,7 @@ _Task WATCardOffice {
     void main();
   public:
     _Event Lost {};                        // uC++ exception type, like "struct"
-    WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
+    WATCardOffice( Printer& prt, Bank &bank, unsigned int numCouriers );
     FWATCard create( unsigned int sid, unsigned int amount );
     FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
     Job *requestWork();
@@ -68,7 +68,7 @@ _Monitor Bank {
 _Task Parent {
     void main();
   public:
-    Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
+    Parent( Printer& prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
 };
 
 _Task VendingMachine {
@@ -76,7 +76,7 @@ _Task VendingMachine {
   public:
     enum Flavours { ... };                 // flavours of soda (YOU DEFINE)
     enum Status { BUY, STOCK, FUNDS };     // purchase status: successful buy, out of stock, insufficient funds
-    VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
+    VendingMachine( Printer& prt, NameServer& nameServer, unsigned int id, unsigned int sodaCost,
                     unsigned int maxStockPerFlavour );
     Status buy( Flavours flavour, WATCard &card );
     unsigned int *inventory();
@@ -88,7 +88,7 @@ _Task VendingMachine {
 _Task NameServer {
     void main();
   public:
-    NameServer( Printer &prt, unsigned int numVendingMachines, unsigned int numStudents );
+    NameServer( Printer& prt, unsigned int numVendingMachines, unsigned int numStudents );
     void VMregister( VendingMachine *vendingmachine );
     VendingMachine *getMachine( unsigned int id );
     VendingMachine **getMachineList();
@@ -97,7 +97,7 @@ _Task NameServer {
 _Task BottlingPlant {
     void main();
   public:
-    BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines,
+    BottlingPlant( Printer& prt, NameServer& nameServer, unsigned int numVendingMachines,
                  unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour,
                  unsigned int timeBetweenShipments );
     bool getShipment( unsigned int cargo[] );
@@ -106,7 +106,7 @@ _Task BottlingPlant {
 _Task Truck {
     void main();
   public:
-    Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
+    Truck( Printer& prt, NameServer& nameServer, BottlingPlant& plant,
            unsigned int numVendingMachines, unsigned int maxStockPerFlavour );
 };
 

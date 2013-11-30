@@ -2,10 +2,15 @@
 
 using namespace std;
 
-void Parent::main(){
-
+// constructo
+Parent::Parent(Printer& prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay): 
+	printer(prt),
+	bank(bank)
+{
+	this->numStudents = numStudents;
+	this->parentalDelay = parentalDelay;
 }
 
-Parent::Parent(Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ){
-	
+void Parent::main(){
+
 }
