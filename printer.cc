@@ -3,7 +3,9 @@
 using namespace std;
 
 Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers ){
-
+	this->numStudents = numStudents;
+	this->numVendingMachines = numVendingMachines;
+	this->numCouriers = numCouriers;
 }
 
 void Printer::print( Kind kind, char state ){

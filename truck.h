@@ -5,6 +5,8 @@
 #include "nameServer.h"
 #include "bottlePlant.h"
 
+_Task BottlingPlant;
+
 _Task Truck {
 public:
 	Truck(Printer& prt, NameServer& nameServer, BottlingPlant& plant,

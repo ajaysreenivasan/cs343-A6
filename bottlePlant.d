@@ -11,4 +11,4 @@ bottlePlant.o: bottlePlant.cc /usr/local/u++-6.0.0/inc/uC++.h \
  /usr/local/u++-6.0.0/inc/uPIHeap.h /usr/local/u++-6.0.0/inc/uHeap.h \
  /usr/local/u++-6.0.0/inc/uC++.h /usr/local/u++-6.0.0/inc/uBaseSelector.h \
  /usr/local/u++-6.0.0/inc/uLocalDebugger.h bottlePlant.h printer.h \
- nameServer.h
+ nameServer.h truck.h
