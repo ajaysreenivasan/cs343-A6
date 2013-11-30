@@ -4,6 +4,7 @@
 #include "printer.h"
 #include "nameServer.h"
 #include "watCardOffice.h"
+#include "watcard.h"
 
 _Task Student {
 public:
@@ -19,6 +20,8 @@ private:
 	WATCardOffice& cardOffice;
 	unsigned int id;
 	unsigned int maxPurchases;
+  unsigned int numToPurchase;
+  WATCard::FWATCard fw;
 };
 
 #endif
