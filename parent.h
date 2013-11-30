@@ -4,6 +4,8 @@
 #include "printer.h"
 #include "bank.h"
 
+extern MPRNG rng;
+
 _Task Parent {
 public:
 	Parent(Printer& prt, Bank& bank, unsigned int numStudents, unsigned int parentalDelay);

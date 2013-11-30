@@ -1,6 +1,7 @@
 #ifndef BANK_H
 #define BANK_H
 
+#include <uC++.h>
 #include <vector>
 
 _Monitor Bank {
@@ -13,6 +14,7 @@ private:
 	unsigned int numStudents;
 	unsigned int amount;
 	std::vector<unsigned int> studentBalances;
+	std::vector<uCondition> studentBalanceCondition;
 };
 
 #endif

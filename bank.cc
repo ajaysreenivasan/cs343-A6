@@ -10,9 +10,15 @@ Bank::Bank(unsigned int numStudents){
 }
 
 void Bank::deposit(unsigned int id, unsigned int amount){
+	studentBalanceCondition[id].signal();
+
 	studentBalances[id] += amount;
 }
 
 void Bank::withdraw(unsigned int id, unsigned int amount){
+	while(studentBalances[id] < amount){
+		studentBalanceCondition[id].wait();
+	}
+
 	studentBalances[id] -= amount;
 }
