@@ -10,4 +10,5 @@ parent.o: parent.cc /usr/local/u++-6.0.0/inc/uC++.h \
  /usr/local/u++-6.0.0/inc/uCalendar.h /usr/local/u++-6.0.0/inc/uAlarm.h \
  /usr/local/u++-6.0.0/inc/uPIHeap.h /usr/local/u++-6.0.0/inc/uHeap.h \
  /usr/local/u++-6.0.0/inc/uC++.h /usr/local/u++-6.0.0/inc/uBaseSelector.h \
- /usr/local/u++-6.0.0/inc/uLocalDebugger.h parent.h printer.h bank.h
+ /usr/local/u++-6.0.0/inc/uLocalDebugger.h parent.h MPRNG.h printer.h \
+ bank.h truck.h nameServer.h bottlePlant.h

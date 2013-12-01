@@ -7,7 +7,7 @@
 
 using namespace std;
 
-MPRNG m;
+MPRNG rng;
 
 void uMain::main(){
 

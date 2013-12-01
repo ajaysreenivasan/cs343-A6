@@ -1,9 +1,7 @@
 #include "parent.h"
 
-using namespace std;
-
 // constructor
-Parent::Parent(Printer& prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay): 
+Parent::Parent(Printer& prt, Bank& bank, unsigned int numStudents, unsigned int parentalDelay): 
 	printer(prt),
 	bank(bank)
 {
