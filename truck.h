@@ -11,9 +11,11 @@ _Task Truck {
 public:
 	Truck(Printer& prt, NameServer& nameServer, BottlingPlant& plant,
 		unsigned int numVendingMachines, unsigned int maxStockPerFlavour);
+	~Truck();
 
 private:
 	void main();
+	void checkCargo();
 
 private:
 	Printer& printer;
@@ -21,6 +23,11 @@ private:
 	BottlingPlant& plant;
 	unsigned int numVendingMachines;
 	unsigned int maxStockPerFlavour;
+	unsigned int maxFlavourCount;
+	unsigned int* cargo;
+	bool hasCargo;
 };
 
 #endif
+
+// comment
