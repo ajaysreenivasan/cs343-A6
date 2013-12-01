@@ -13,8 +13,8 @@ _Monitor Bank {
 private:
 	unsigned int numStudents;
 	unsigned int amount;
-	std::vector<unsigned int> studentBalances;
-	std::vector<uCondition> studentBalanceCondition;
+	std::vector<unsigned int> studentBalances;						//balances for each student
+	std::vector<uCondition> studentBalanceCondition;				//used to block on insufficient funds
 };
 
 #endif

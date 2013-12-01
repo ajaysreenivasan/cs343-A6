@@ -7,27 +7,27 @@ BottlingPlant::BottlingPlant(Printer& prt, NameServer& nameServer, unsigned int 
 	printer(prt),
 	nameServer(nameServer)
 {
-	this->numVendingMachines = numVendingMachines;
+	this->numVendingMachines = numVendingMachines;					//setting member values
 	this->maxShippedPerFlavour = maxShippedPerFlavour;
 	this->maxStockPerFlavour = maxStockPerFlavour;
 	this->timeBetweenShipments = timeBetweenShipments;
 
-	this->maxFlavourCount = 4; // Given in assignment. Look into changing it from magic # maybe.
+	this->maxFlavourCount = 4; 										// Given in assignment. Look into changing it from magic # maybe.
 	this->isClosing = false;
-	this->shipment = new unsigned int[maxFlavourCount];
-	this->shippingTruck = new Truck(printer, nameServer, *this,
+	this->shipment = new unsigned int[maxFlavourCount];				//creating shippment
+	this->shippingTruck = new Truck(printer, nameServer, *this,		//creating truck
 		numVendingMachines, maxStockPerFlavour);
 }
 
-BottlingPlant::~BottlingPlant(){
+BottlingPlant::~BottlingPlant(){									//deconstructor
 	delete shipment;
 }
 
-bool BottlingPlant::getShipment(unsigned int cargo[]){
+bool BottlingPlant::getShipment(unsigned int cargo[]){				//if plant closing down return true
 	if(isClosing){
 		return true;
 	}
-	else{
+	else{															//else copy shipment into the truck and return false
 		for(unsigned int i = 0; i < maxFlavourCount; i++){
 			cargo[i] = shipment[i];
 			shipment[i] = 0;
@@ -37,11 +37,11 @@ bool BottlingPlant::getShipment(unsigned int cargo[]){
 	}
 }
 
-void BottlingPlant::main(){
+void BottlingPlant::main(){											//loop while not closing
 	while(true){
-		yield(timeBetweenShipments);
+		yield(timeBetweenShipments);								//yield time between shipments
 
-		for(unsigned int i = 0; i < maxFlavourCount; i++){
+		for(unsigned int i = 0; i < maxFlavourCount; i++){			//ermmm .... how are shipments tied to truck?
 			shipment[i] = rng(0, maxStockPerFlavour);
 		}
 
