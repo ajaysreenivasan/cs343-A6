@@ -1,7 +1,5 @@
 #include "watcard.h"
 
-using namespace std;
-
 // constructor
 WATCard::WATCard(){
 	this->balance = 0;

@@ -11,7 +11,9 @@ printer(prt),
 	this->id = id;
 	this->sodaCost = sodaCost;
 
-	for(int i = 0; i < maxFlavourCount; i++){
+	this->maxFlavourCount = int(VendingMachine::MaxFlavourCount);
+
+	for(unsigned int i = 0; i < maxFlavourCount; i++){
 		sodaInventory[i] = 0;
 	}
 
@@ -21,6 +23,7 @@ printer(prt),
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 	if(sodaInventory[flavour] > 0){
 		if(card.getBalance() >= sodaCost){
+			sodaInventory[flavour] -= 1;
 			card.withdraw(sodaCost);
 			return VendingMachine::BUY;
 		}
@@ -28,13 +31,13 @@ VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 			return VendingMachine::FUNDS;
 		}
 	}
-	else if(sodaInventory[flavour] == 0){
+	else{
 		return VendingMachine::STOCK;
 	}
 }
 
 unsigned int* VendingMachine::inventory(){
-	return sodaInventory
+	return sodaInventory;
 }
 
 void VendingMachine::restocked(){
