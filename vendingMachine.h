@@ -27,6 +27,9 @@ private:
 	NameServer& nameServer;
 	unsigned int id;
 	unsigned int sodaCost;
+	unsigned int* sodaInventory;
 };
 
 #endif
+
+// comment

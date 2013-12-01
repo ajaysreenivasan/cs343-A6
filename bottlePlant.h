@@ -1,9 +1,13 @@
 #ifndef BOTTLEPLANT_H
 #define BOTTLEPLANT_H
 
+#include "MPRNG.h"
+
 #include "printer.h"
 #include "nameServer.h"
 #include "truck.h"
+
+extern MPRNG rng;
 
 _Task Truck;
 
@@ -25,7 +29,12 @@ private:
 	unsigned int maxShippedPerFlavour;
 	unsigned int maxStockPerFlavour;
 	unsigned int timeBetweenShipments;
+	unsigned int maxFlavourCount;
+	bool isClosing;
+	unsigned int* shipment;
 	Truck* shippingTruck;
 };
 
 #endif
+
+// comment

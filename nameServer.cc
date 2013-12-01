@@ -10,7 +10,7 @@ NameServer::NameServer(Printer& prt, unsigned int numVendingMachines, unsigned i
 	this->numVendingMachines = numVendingMachines;
 	this->numStudents = numStudents;
 
-	this->vendingMachineList = new vector<VendingMachine*>();
+	this->vendingMachineList = new VendingMachine*[numVendingMachines];
 }
 
 NameServer::~NameServer(){
@@ -34,3 +34,6 @@ VendingMachine** NameServer::getMachineList(){
 void NameServer::main(){
 
 }
+
+// comment
+// comment
