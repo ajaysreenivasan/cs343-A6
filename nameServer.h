@@ -23,10 +23,9 @@ private:
 	Printer& printer;
 	unsigned int numVendingMachines;
 	unsigned int numStudents;
+	unsigned int vendingMachineIndex;
 	VendingMachine** vendingMachineList;
+	std::vector<int> studentNextMachineAssignment;
 };
 
 #endif
-
-// comment
-// comment
