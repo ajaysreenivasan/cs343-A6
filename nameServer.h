@@ -23,7 +23,10 @@ private:
 	Printer& printer;
 	unsigned int numVendingMachines;
 	unsigned int numStudents;
-	std::vector<VendingMachine*>* vendingMachineList;
+	VendingMachine** vendingMachineList;
 };
 
 #endif
+
+// comment
+// comment

@@ -35,3 +35,6 @@ _Nomutex unsigned int VendingMachine::getId(){
 void VendingMachine::main(){
 
 }
+
+
+// comment

@@ -16,3 +16,5 @@ struct ConfigParms {
 void processConfigFile(const char* configFile, ConfigParms& cparms);
 
 #endif
+
+// comment

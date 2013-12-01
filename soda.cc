@@ -121,3 +121,5 @@ _Monitor / _Cormonitor Printer {
     void print( Kind kind, unsigned int lid, char state, int value1 );
     void print( Kind kind, unsigned int lid, char state, int value1, int value2 );
 };
+
+// comment
