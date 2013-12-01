@@ -4,7 +4,7 @@ using namespace std;
 
 // constructor
 WATCard::WATCard(){
-
+	this->balance = 0;
 }
 
 void WATCard::deposit(unsigned int amount){
@@ -19,6 +19,10 @@ unsigned int WATCard::getBalance(){
 	return balance;
 }
 
+// private copy constructor (to prevent copying)
+WATCard::WATCard(const WATCard&){
+}
 
-
-// comment
+// private assignment operator (to prevent copying?)
+WATCard& WATCard::operator=(const WATCard&){
+}

@@ -10,14 +10,31 @@ printer(prt),
 {
 	this->id = id;
 	this->sodaCost = sodaCost;
+
+	for(int i = 0; i < maxFlavourCount; i++){
+		sodaInventory[i] = 0;
+	}
+
+	nameServer.VMregister(this);
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
-	return VendingMachine::BUY;
+	if(sodaInventory[flavour] > 0){
+		if(card.getBalance() >= sodaCost){
+			card.withdraw(sodaCost);
+			return VendingMachine::BUY;
+		}
+		else{
+			return VendingMachine::FUNDS;
+		}
+	}
+	else if(sodaInventory[flavour] == 0){
+		return VendingMachine::STOCK;
+	}
 }
 
 unsigned int* VendingMachine::inventory(){
-	return NULL;
+	return sodaInventory
 }
 
 void VendingMachine::restocked(){
@@ -33,7 +50,17 @@ _Nomutex unsigned int VendingMachine::getId(){
 }
 
 void VendingMachine::main(){
+	while(true){
+		_Accept(buy){
 
+		}
+		or
+		_Accept(inventory){
+			_Accept(restocked){
+			
+			}
+		}
+	}
 }
 
 
