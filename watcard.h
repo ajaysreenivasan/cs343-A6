@@ -21,15 +21,3 @@ private:
 };
 
 #endif
-
-//// private copy constructor (to prevent copying)
-//WATCard::WATCard(const WATCard&){
-//
-//}
-//
-//// private assignment operator (to prevent copying?)
-//WATCard& WATCard::operator=(const WATCard&){
-//
-//}
-
-// comment
