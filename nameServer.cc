@@ -11,9 +11,10 @@ NameServer::NameServer(Printer& prt, unsigned int numVendingMachines, unsigned i
 	this->numVendingMachines = numVendingMachines;
 	this->numStudents = numStudents;
 	this->vendingMachineList = new VendingMachine*[numVendingMachines];
-	vendingMachineIndex=0;
-	for(unsigned int i=0;i<numStudents;i++){
-		this->studentNextMachineAssignment.push_back(i%numVendingMachines);	// initialize indexes to be used by students
+	this->vendingMachineIndex = 0;
+	
+	for(unsigned int i = 0; i < numStudents; i++){
+		this->studentNextMachineAssignment.push_back(i % numVendingMachines);	// initialize indexes to be used by students
 	}
 }
 
@@ -28,7 +29,8 @@ void NameServer::VMregister(VendingMachine* vendingmachine){
 VendingMachine* NameServer::getMachine(unsigned int id){
 	//need to ensure that all vending machines registered before running below code
 	VendingMachine* retValue = vendingMachineList[studentNextMachineAssignment[id]];
-	studentNextMachineAssignment[id]=(studentNextMachineAssignment[id]+1)%numVendingMachines;
+	studentNextMachineAssignment[id] = (studentNextMachineAssignment[id] + 1) % numVendingMachines;
+	
 	return retValue;
 }
 
@@ -38,13 +40,13 @@ VendingMachine** NameServer::getMachineList(){
 
 void NameServer::main(){
 	while(true){	//loop infinitely until destructor called
-		_Accept(NameServer::~NameServer){
+		_Accept(~NameServer){
 			break;
 		}
-		if(vendingMachineIndex<numVendingMachines) 
-			_Accept(NameServer::VMregister);
-		else
-			_Accept(NameServer::getMachine, NameServer::getMachineList);
 
+		if(vendingMachineIndex < numVendingMachines) 
+			_Accept(VMregister);
+		else
+			_Accept(getMachine, getMachineList);
 	}
 }
