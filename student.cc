@@ -12,6 +12,7 @@ Student::Student(Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice
 }
 
 void Student::main(){
+	printer.print(Printer::Student,'S');
 	numToPurchase = rng(1, maxPurchases); 	//random number bottles to purchase between 1 and maxPurchases			 	
 	VendingMachine::Flavours favouriteFlavour = (VendingMachine::Flavours)rng(3); //random favorite flavour between [0,3]
 	//this should be a flavour
@@ -22,12 +23,15 @@ void Student::main(){
 			fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
 		}
 		catch(WATCardOffice::Lost){
+			printer.print(Printer::Student,'L');
 			watCardLost=true;									//new watcard was lost retry creating with 5$
 		}
 	}
 	
 
 	VendingMachine* vmLocation = nameServer.getMachine(id);			//get vending machine location via name server
+	printer.print(Printer::Student,'V',vmLocation->getId());
+	
 	bool noYield=false;			//noYield used to tell not needing to yield
 	while(numToPurchase > 0){
 		//attempt to purchase soda
@@ -43,6 +47,7 @@ void Student::main(){
 		if(stat==VendingMachine::STOCK){
 			//get new vending machine if stat == STOCK
 			vmLocation=nameServer.getMachine(id);
+			printer.print(Printer::Student,'V',vmLocation->getId());
 		}
 		else if(stat==VendingMachine::FUNDS){
 		//block while update to funds is made need to account for different cases here
@@ -50,12 +55,14 @@ void Student::main(){
 				fWATCard=cardOffice.transfer(id,vmLocation->cost()+5,fWATCard());
 			}
 			catch(WATCardOffice::Lost){
+				printer.print(Printer::Student,'L');
 				watCardLost=true;												//watcard lost, create new watcard
 				while(watCardLost){
 					try{
 						fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
 					}
 					catch(WATCardOffice::Lost){
+						printer.print(Printer::Student,'L');
 						watCardLost=true;									//new watcard was lost retry creating with 5$
 					}
 				}
@@ -64,10 +71,12 @@ void Student::main(){
 		}
 		else{	//stat == BUY successfully purchased soda
 			numToPurchase--;
+			printer.print(Printer::Student,'B',fWATCard()->getBalance());
 		}
 	}//end purchase while loop
 
 	//all soda planned to purchase is purchased terminate
+	printer.print(Printer::Student,'F');
 }
 
 // comment

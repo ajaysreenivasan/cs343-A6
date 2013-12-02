@@ -31,18 +31,21 @@ bool BottlingPlant::getShipment(unsigned int cargo[]){				//if plant closing dow
 			cargo[i] = shipment[i];
 			shipment[i] = 0;
 		}
-
+		printer.print(Printer::BottlingPlant,'P');
 		return false;
 	}
 }
 
 void BottlingPlant::main(){											//loop while not closing
+	printer.print(Printer::BottlingPlant,'S');
 	while(true){
 		yield(timeBetweenShipments);								//yield time between shipments
-
+		unsigned int bottleCount=0;
 		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){			//ermmm .... how are shipments tied to truck?
-			shipment[i] = rng(0, maxStockPerFlavour);
+			shipment[i] = rng(0, maxStockPerFlavour-1);
+			bottleCount+=shipment[i];
 		}
+		printer.print(Printer::BottlingPlant,'G', bottleCount);
 
 		_Accept(~BottlingPlant){
 			isClosing = true; 
@@ -54,6 +57,7 @@ void BottlingPlant::main(){											//loop while not closing
 				delete shippingTruck;
 		}
 	}
+	printer.print(Printer::BottlingPlant,'F');
 }
 
 // comment

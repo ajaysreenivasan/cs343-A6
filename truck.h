@@ -16,6 +16,7 @@ public:
 private:
 	void main();
 	void checkCargo();
+	unsigned int getCargoCount();
 
 private:
 	Printer& printer;

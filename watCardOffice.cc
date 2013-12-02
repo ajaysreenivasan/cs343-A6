@@ -10,7 +10,7 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers)
 
 	courierList = new Courier*[numCouriers];
 	for(unsigned int i = 0; i < numCouriers; i++){
-		courierList[i] = new Courier(bank, *this);
+		courierList[i] = new Courier(bank, *this, printer);
 	}
 
 }
@@ -25,7 +25,7 @@ WATCardOffice::~WATCardOffice(){
 WATCard::FWATCard WATCardOffice::create(unsigned int sid, unsigned int amount){
 	Job* newJob = new Job(sid, 0, amount);
 	jobQueue.push(newJob);
-
+	printer.print(Printer::WATCardOffice,'C',sid,amount);
 	jobAvailableCondition.signal();
 
 	return newJob->result;
@@ -35,7 +35,7 @@ WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount,
 	unsigned int cardBalance = card->getBalance();
 	Job* newJob = new Job(sid, cardBalance, amount);
 	jobQueue.push(newJob);
-
+	printer.print(Printer::WATCardOffice,'T',sid,amount);
 	jobAvailableCondition.signal();
 
 	return newJob->result;
@@ -48,11 +48,12 @@ WATCardOffice::Job* WATCardOffice::requestWork(){
 
 	Job* job = jobQueue.front();
 	jobQueue.pop();
-
+	printer.print(Printer::WATCardOffice,'W');
 	return job;
 }
 
 void WATCardOffice::main(){
+	printer.print(Printer::WATCardOffice,'S');
 	while(true){
 		_Accept(~WATCardOffice){
 			for(unsigned int i = 0; i < numCouriers; i++){
@@ -71,6 +72,7 @@ void WATCardOffice::main(){
 		_Accept(requestWork){
 		}
 	}
+	printer.print(Printer::WATCardOffice,'F');
 }
 
 WATCardOffice::Job::Job(unsigned int sid, unsigned int cardBalance, unsigned int withdrawalAmount) {
@@ -79,20 +81,22 @@ WATCardOffice::Job::Job(unsigned int sid, unsigned int cardBalance, unsigned int
 	this->withdrawalAmount = withdrawalAmount;
 }
 
-WATCardOffice::Courier::Courier(Bank& bank, WATCardOffice& cardOffice):
+WATCardOffice::Courier::Courier(Bank& bank, WATCardOffice& cardOffice,Printer& prt):
 bank(bank),
-cardOffice(cardOffice){
+cardOffice(cardOffice),
+printer(prt){
 	
 }
 
 void WATCardOffice::Courier::main(){
+	printer.print(Printer::Courier,'S');
 	while(true){
 		Job* newJob = cardOffice.requestWork();
 	
 		if(newJob == NULL){
 			break;
 		}
-
+		printer.print(Printer::Courier,'t',newJob->sid,newJob->withdrawalAmount);
 		bank.withdraw(newJob->sid, newJob->withdrawalAmount);
 		
 		WATCard* newWATCard = new WATCard();
@@ -107,7 +111,8 @@ void WATCardOffice::Courier::main(){
 		else{
 			newJob->result.exception(new WATCardOffice::Lost);
 		}
-
+		printer.print(Printer::Courier,'T',newJob->sid,newJob->withdrawalAmount);
 		delete newJob;
 	}
+	printer.print(Printer::Courier,'F');
 }

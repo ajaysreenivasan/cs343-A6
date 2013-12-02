@@ -10,6 +10,7 @@ Parent::Parent(Printer& prt, Bank& bank, unsigned int numStudents, unsigned int 
 }
 
 void Parent::main(){
+	printer.print(Printer::Parent,'S');
 	while(true){
 		_Accept(~Parent){
 			break;
@@ -18,9 +19,11 @@ void Parent::main(){
 			unsigned int depositRecipient = rng(0, numStudents - 1);
 			unsigned int depositAmount = rng(1, 3);
 			yield(parentalDelay);
+			printer.print(Printer::Parent,'D',depositRecipient,depositRecipient);
 			bank.deposit(depositRecipient, depositAmount);
 		}
 	}
+	printer.print(Printer::Parent,'F');
 }
 
 // comment

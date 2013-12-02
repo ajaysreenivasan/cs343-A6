@@ -21,12 +21,14 @@ Truck::~Truck(){
 
 // main method
 void Truck::main(){
+	printer.print(Printer::Truck,'S');
 	while(true){
 		yield(10);
 		if(plant.getShipment(cargo)){
 			break;	
 		}
 		hasCargo = true;
+		printer.print(Printer::Truck,'P',getCargoCount());
 
 		VendingMachine** vendingMachineList = nameServer.getMachineList();
 		VendingMachine* vendingMachine;
@@ -39,30 +41,44 @@ void Truck::main(){
 			vendingMachine = vendingMachineList[i];
 			vendingMachineInventory = vendingMachine->inventory();
 
-			unsigned int restockRequirement;
-
+			unsigned int restockRequirement=0;
+			unsigned int unfilledBottles=0;
+			printer.print(Printer::Truck,'d',i,getCargoCount());
 			for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 				if(vendingMachineInventory[i] < maxStockPerFlavour){
 					restockRequirement = maxStockPerFlavour - vendingMachineInventory[i];
-					if(cargo[i] >= restockRequirement)
+					if(cargo[i] >= restockRequirement){
 						vendingMachineInventory[i] += restockRequirement;
+						cargo[i]-=restockRequirement;
+					}
 					else
 						vendingMachineInventory[i] += cargo[i];
+						unfilledBottles+=restockRequirement-cargo[i];
+						cargo[i]=0;
 				}
 			}
+			printer.print(Printer::Truck,'U',i,unfilledBottles);
+
 			vendingMachine->restocked();
+			
+			printer.print(Printer::Truck,'D',i,getCargoCount());
 
 			checkCargo();
 		}		
 	}
+	printer.print(Printer::Truck,'F');
 }
 
-void Truck::checkCargo(){
+unsigned int Truck::getCargoCount(){
 	int stockCount = 0;
 	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		stockCount += cargo[i];
 	}
+	return stockCount;
+}
 
+void Truck::checkCargo(){
+	int stockCount = getCargoCount();
 	if(stockCount == 0)
 		this->hasCargo = false;
 	else

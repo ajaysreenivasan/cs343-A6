@@ -24,10 +24,8 @@ void Bank::deposit(unsigned int id, unsigned int amount){
 }
 
 void Bank::withdraw(unsigned int id, unsigned int amount){			
-	std::cout << " fuck off sir" << std::endl;
 	while(studentBalances[id] < amount){							//while insufficient funds block
 		studentBalanceCondition[id].wait();
 	}
-		std::cout << " FUCK off sir" << std::endl;
 	studentBalances[id] -= amount;									//withdraw amount
 }

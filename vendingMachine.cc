@@ -17,12 +17,7 @@ printer(prt),
 		sodaInventory[i] = 0;
 	}
 
-	cout << "GARBAGE" << endl;
-
 	nameServer.VMregister(this);
-
-	
-	cout << "TRASH" << endl;
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
@@ -30,6 +25,10 @@ VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 		if(card.getBalance() >= sodaCost){
 			sodaInventory[flavour] -= 1;
 			card.withdraw(sodaCost);
+			
+			printer.print(Printer::Vending,'B',
+				(unsigned int)flavour,sodaInventory[flavour]);
+
 			return VendingMachine::BUY;
 		}
 		else{
@@ -42,11 +41,12 @@ VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 }
 
 unsigned int* VendingMachine::inventory(){
+	printer.print(Printer::Vending,'r');
 	return sodaInventory;
 }
 
 void VendingMachine::restocked(){
-
+	printer.print(Printer::Vending,'R');
 }
 
 _Nomutex unsigned int VendingMachine::cost(){
@@ -58,6 +58,7 @@ _Nomutex unsigned int VendingMachine::getId(){
 }
 
 void VendingMachine::main(){
+	printer.print(Printer::Vending,'S',sodaCost);
 	while(true){
 		_Accept(buy){
 
@@ -73,4 +74,5 @@ void VendingMachine::main(){
 			break;
 		}
 	}
+	printer.print(Printer::Vending,'S');
 }
