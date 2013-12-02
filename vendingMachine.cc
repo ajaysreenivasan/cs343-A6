@@ -18,6 +18,10 @@ printer(prt),
 	}
 }
 
+VendingMachine::~VendingMachine(){
+	delete[] sodaInventory;
+}
+
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 	if(sodaInventory[flavour] > 0){
 		if(card.getBalance() >= sodaCost){

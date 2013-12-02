@@ -19,7 +19,7 @@ BottlingPlant::BottlingPlant(Printer& prt, NameServer& nameServer, unsigned int 
 }
 
 BottlingPlant::~BottlingPlant(){									//deconstructor
-	delete shipment;
+	delete[] shipment;
 	delete shippingTruck;
 }
 

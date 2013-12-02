@@ -22,14 +22,15 @@ void Student::main(){
 	printer.print(Printer::Student,id,'S', (int)favouriteFlavour,numToPurchase);
 	//this should be a flavour
 	bool watCardLost=true;					//set to true to do initial create
-	
+	WATCard* watcard;
 	while(watCardLost){												//possible that watcard is lost by courier . need to account for this
 		try{
 			fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
-			fWATCard();
+			watcard=fWATCard();
 			watCardLost=false;
 		}
-		catch(WATCardOffice::Lost){
+		catch(WATCardOffice::Lost* e){
+			delete e;
 			printer.print(Printer::Student,id,'L');
 			watCardLost=true;									//new watcard was lost retry creating with 5$
 		}
@@ -48,7 +49,7 @@ void Student::main(){
 		}
 		noYield=false;																//set to false for now to indicate next loop through it will need to yield
 		//attempt to buy the soda from machine
-		VendingMachine::Status stat= vmLocation->buy(favouriteFlavour, *fWATCard()); 
+		VendingMachine::Status stat= vmLocation->buy(favouriteFlavour, *watcard); 
 		//not compiling
 
 		if(stat==VendingMachine::STOCK){
@@ -59,19 +60,22 @@ void Student::main(){
 		else if(stat==VendingMachine::FUNDS){
 		//block while update to funds is made need to account for different cases here
 			try{
-				fWATCard=cardOffice.transfer(id,vmLocation->cost()+5,fWATCard());
-				fWATCard();
+				fWATCard=cardOffice.transfer(id,vmLocation->cost()+5,watcard);
+				watcard=fWATCard();
 			}
-			catch(WATCardOffice::Lost){
+			catch(WATCardOffice::Lost* e){
+				delete e;
 				printer.print(Printer::Student,id,'L');
 				watCardLost=true;												//watcard lost, create new watcard
 				while(watCardLost){
 					try{
 						fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
-						fWATCard();
+						watcard=fWATCard();
 						watCardLost=false;
 					}
-					catch(WATCardOffice::Lost){
+					catch(WATCardOffice::Lost* e1){
+						delete e1;
+						delete fWATCard;
 						printer.print(Printer::Student,id,'L');
 						watCardLost=true;									//new watcard was lost retry creating with 5$
 					}
@@ -81,7 +85,7 @@ void Student::main(){
 		}
 		else{	//stat == BUY successfully purchased soda
 			numToPurchase--;
-			printer.print(Printer::Student,id,'B',fWATCard()->getBalance());
+			printer.print(Printer::Student,id,'B',watcard->getBalance());
 		}
 	}//end purchase while loop
 

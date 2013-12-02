@@ -119,6 +119,7 @@ void WATCardOffice::Courier::main(){
 		}
 		printer.print(Printer::Courier,id,'T',newJob->sid,newJob->withdrawalAmount);
 		delete newJob;
+		delete newWATCard;
 	}
 	printer.print(Printer::Courier,id,'F');
 }
