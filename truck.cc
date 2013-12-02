@@ -19,22 +19,22 @@ Truck::~Truck(){
 	delete[] cargo;
 }
 
-// main method
+																				// main method
 void Truck::main(){
 	printer.print(Printer::Truck,'S');
-	while(true){
+	while(true){																//loop while plant isn't closing
 		yield(10);
-		if(plant.getShipment(cargo)){
+		if(plant.getShipment(cargo)){											//obtaint next shipment to deliver
 			break;	
 		}
 		hasCargo = true;
 		printer.print(Printer::Truck,'P',getCargoCount());
 
-		VendingMachine** vendingMachineList = nameServer.getMachineList();
+		VendingMachine** vendingMachineList = nameServer.getMachineList();		//get list of vending machines to deliver to
 		VendingMachine* vendingMachine;
 		unsigned int* vendingMachineInventory;
 
-		for(unsigned int i = 0; i < numVendingMachines; i++){
+		for(unsigned int i = 0; i < numVendingMachines; i++){					//deliver to vending machines while there is cargo and vendingmachines to deliver to
 			if(!hasCargo)
 				break;
 
@@ -44,7 +44,7 @@ void Truck::main(){
 			unsigned int restockRequirement=0;
 			unsigned int unfilledBottles=0;
 			printer.print(Printer::Truck,'d',i,getCargoCount());
-			for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
+			for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){	//restock the correct amount of bottles for a given flavour at current vending machine index
 				if(vendingMachineInventory[i] < maxStockPerFlavour){
 					restockRequirement = maxStockPerFlavour - vendingMachineInventory[i];
 					if(cargo[i] >= restockRequirement){
@@ -59,7 +59,7 @@ void Truck::main(){
 			}
 			printer.print(Printer::Truck,'U',i,unfilledBottles);
 
-			vendingMachine->restocked();
+			vendingMachine->restocked();										//finish restocking current vending machine
 			
 			printer.print(Printer::Truck,'D',i,getCargoCount());
 
@@ -69,7 +69,7 @@ void Truck::main(){
 	printer.print(Printer::Truck,'F');
 }
 
-unsigned int Truck::getCargoCount(){
+unsigned int Truck::getCargoCount(){											//printing helper function
 	int stockCount = 0;
 	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		stockCount += cargo[i];

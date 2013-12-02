@@ -12,7 +12,7 @@ printer(prt),
 	this->id = id;
 	this->sodaCost = sodaCost;
 
-	this->sodaInventory = new unsigned int[VendingMachine::MAXFLAVOURCOUNT];
+	this->sodaInventory = new unsigned int[VendingMachine::MAXFLAVOURCOUNT];						//initialize soda inventory
 	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		sodaInventory[i] = 0;
 	}
@@ -23,22 +23,22 @@ VendingMachine::~VendingMachine(){
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
-	if(sodaInventory[flavour] > 0){
-		if(card.getBalance() >= sodaCost){
+	if(sodaInventory[flavour] > 0){																	//flavour is in in stock 
+		if(card.getBalance() >= sodaCost){															// and if card has enough balance
 			sodaInventory[flavour] -= 1;
 			card.withdraw(sodaCost);
-
+																									//buy and withdraw cost of bottle from card
 			printer.print(Printer::Vending,id,'B',
 				flavour,sodaInventory[flavour]);
 
 			return VendingMachine::BUY;
 		}
-		else{
+		else{																						//if not enough funds return FUNDS
 			return VendingMachine::FUNDS;
 		}
 	}
 	else{
-		return VendingMachine::STOCK;
+		return VendingMachine::STOCK;																//if none in stock return STOCK
 	}
 }
 
@@ -62,7 +62,7 @@ _Nomutex unsigned int VendingMachine::getId(){
 void VendingMachine::main(){
 	printer.print(Printer::Vending,id,'S',sodaCost);
 
-	nameServer.VMregister(this);
+	nameServer.VMregister(this);																	//main loop until destructor calledd
 	while(true){
 		_Accept(buy){
 

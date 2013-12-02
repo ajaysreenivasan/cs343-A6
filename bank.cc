@@ -7,7 +7,7 @@ Bank::Bank(unsigned int numStudents){								//constructor
 
 	this->studentBalances = new unsigned int[numStudents];
 	for(unsigned int i = 0; i < numStudents; i++)
-		studentBalances[i] = 0;	 //init balances to 0 for each student
+		studentBalances[i] = 0;	 									//init balances to 0 for each student
 	
 	this->studentBalanceCondition = new uCondition[numStudents];
 }

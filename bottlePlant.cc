@@ -42,7 +42,7 @@ void BottlingPlant::main(){											//loop while not closing
 	while(true){
 		yield(timeBetweenShipments);								//yield time between shipments
 		unsigned int bottleCount=0;
-		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){			//ermmm .... how are shipments tied to truck?
+		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){	//generate bottles for next shipment
 			shipment[i] = rng(0, maxStockPerFlavour);
 			bottleCount+=shipment[i];
 		}
@@ -57,11 +57,8 @@ void BottlingPlant::main(){											//loop while not closing
 		}
 	}
 	
-	_Accept(getShipment)
+	_Accept(getShipment)											//wait until truck gets last shipment
 	{
 	}
 	printer.print(Printer::BottlingPlant,'F');
 }
-
-// comment
-// comment

@@ -29,6 +29,3 @@ private:
 };
 
 #endif
-
-// comment
-// comment

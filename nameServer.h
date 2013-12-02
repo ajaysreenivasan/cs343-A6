@@ -26,7 +26,6 @@ private:
 	unsigned int vendingMachineIndex;
 	VendingMachine** vendingMachineList;
 	std::vector<int> studentNextMachineAssignment;									//used to keep track of what vendingMachine students should get next
-	//uCondition* vmRegisteredCondition;
 };
 
 #endif

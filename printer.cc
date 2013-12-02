@@ -3,18 +3,18 @@
 
 using namespace std;
 
-Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers ){
-	this->numStudents = numStudents;
+Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers ){	//constructor
+	this->numStudents = numStudents;																		//set member variables
 	this->numVendingMachines = numVendingMachines;
 	this->numCouriers = numCouriers;
 	int idCounter =0;
 
-	this->size=numStudents+numVendingMachines+numCouriers+5;
+	this->size=numStudents+numVendingMachines+numCouriers+5;												//allocate mem for buffers
 	stateBuffer = new char[size];
 	value1Buffer= new int[size];
 	value2Buffer=new int[size];
 
-	for(unsigned int i =0;i<size;i++){
+	for(unsigned int i =0;i<size;i++){																		//generate initial output and initial buffer values
 		if(i==0){
 			cout<<"Parent";
 		}
@@ -51,14 +51,14 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
 	cout<<endl;
 }
 
-Printer::~Printer(){
+Printer::~Printer(){																						//deconstructor delete buffers
 	delete[] stateBuffer;
 	delete[] value1Buffer;
 	delete[] value2Buffer;
 	cout<<"***********************\n";
 }
 
-void Printer::printDebug(unsigned int i){
+/*void Printer::printDebug(unsigned int i){																	//debug method used to determine what task is calling print
 	cout<<i<<endl;
 	if(i==0){
 		cout<<"Parent";
@@ -85,9 +85,9 @@ void Printer::printDebug(unsigned int i){
 		cout<<"Cour"<<i-5-numStudents-numVendingMachines;
 	}
 	cout<<endl;
-}
+}*/
 
-//Parent, WATCardOffice, NameServer, Truck, BottlingPlant
+																				//Get the buffer index of kinds Parent, WATCardOffice, NameServer, Truck, BottlingPlant
 unsigned int Printer::getIndex(Kind kind){
 	if(kind==Parent){
 		return 0;
@@ -111,7 +111,7 @@ unsigned int Printer::getIndex(Kind kind){
 	}
 }
 
-//Student, Vending, Courier
+																				//get the buffer index of kinds Student, Vending, Courier
 unsigned int Printer::getIndex(Kind kind, unsigned int lid){
 	if(kind==Student){
 		return 5+lid;
@@ -128,18 +128,18 @@ unsigned int Printer::getIndex(Kind kind, unsigned int lid){
 	}
 }
 
-void Printer::flushLine(){
+void Printer::flushLine(){														//flushline
 	for(unsigned int i=0;i<size;i++){
-		if(stateBuffer[i]!='%'){
+		if(stateBuffer[i]!='%'){												//if state is '%' ignore it
 			cout<<stateBuffer[i];
-			if(value1Buffer[i]!=-1){
+			if(value1Buffer[i]!=-1){											//if values are -1 ignore them
 				cout<<value1Buffer[i];
 				if(value2Buffer[i]!=-1){
-					cout<<","<<value2Buffer[i];
+					cout<<","<<value2Buffer[i];									//else output current buffer value
 				}
 			}
 		}
-		cout<<"\t";
+		cout<<"\t";																//reset buffers to ignoreable state
 		stateBuffer[i]='%';
 		value1Buffer[i]=-1;
 		value2Buffer[i]=-1;
@@ -147,26 +147,27 @@ void Printer::flushLine(){
 	cout<<endl;
 }
 
-void Printer::updateBuffer(unsigned int index, char state){
+void Printer::updateBuffer(unsigned int index, char state){						//updates buffers with new values
 	updateBuffer(index, state, -1, -1);
 }
 
-void Printer::updateBuffer(unsigned int index, char state, int value1){
+void Printer::updateBuffer(unsigned int index, char state, int value1){			//updates buffers with new values
 	updateBuffer(index, state, value1,-1);
 }
 
 
-void Printer::updateBuffer(unsigned int index, char state, int value1, int value2){	//checks if buffer needs to be flushed
+void Printer::updateBuffer(unsigned int index, char state, int value1, int value2){	
+																				//checks if buffer needs to be flushed
 	if(stateBuffer[index]!='%'){
 		flushLine();
 	}
-	stateBuffer[index]=state;											//updates buffer value
+	stateBuffer[index]=state;													//updates buffer values
 	value1Buffer[index]=value1;
 	value2Buffer[index]=value2;
 }
 
-void Printer::finish(unsigned int index){				//flushes all buffers then prints finish message
-	flushLine();										//for given index
+void Printer::finish(unsigned int index){										//flushes all buffers then prints finish message for given index
+	flushLine();
 	for(unsigned int i=0; i<size;i++){
 		if(i==index){
 			cout<<"F\t";
@@ -223,5 +224,3 @@ void Printer::print( Kind kind, unsigned int lid, char state, int value1, int va
 	//printDebug(curId);
 	updateBuffer(curId,state,value1,value2);
 }
-
-// comment

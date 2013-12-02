@@ -34,7 +34,7 @@ void uMain::main(){
 	rng.seed(seed);
 
 	ConfigParms cp;																			//process confiigFile
-	processConfigFile(inputFile,cp);																			//create specified tasks in correct order
+	processConfigFile(inputFile,cp);														//create specified tasks in correct order
 	Printer* printer = new Printer(cp.numStudents,cp.numVendingMachines,cp.numCouriers);
 	
 	Bank* bank = new Bank(cp.numStudents);
@@ -65,7 +65,7 @@ void uMain::main(){
 		students.pop_back();
 	}
 
-	delete bottlePlant;																		//delete bottle next to allow last shipment to finish
+	delete bottlePlant;																		//delete plant next to allow last shipment to finish
 
 	while(!vendingMachines.empty()){														//then delete vending machines
 		delete vendingMachines.back();

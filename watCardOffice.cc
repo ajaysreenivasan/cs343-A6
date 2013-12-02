@@ -10,7 +10,7 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers)
 {
 	this->numCouriers = numCouriers;
 
-	courierList = new Courier*[numCouriers];
+	courierList = new Courier*[numCouriers];												//initialize couriers
 	for(unsigned int i = 0; i < numCouriers; i++){
 		courierList[i] = new Courier(bank, *this, printer,i);
 	}
@@ -19,13 +19,13 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers)
 }
 
 WATCardOffice::~WATCardOffice(){
-	for(unsigned int i = 0; i < numCouriers; i++){
+	for(unsigned int i = 0; i < numCouriers; i++){											//delete couriers
 		delete courierList[i];
 	}
 	delete[] courierList;
 }
 
-WATCard::FWATCard WATCardOffice::create(unsigned int sid, unsigned int amount){
+WATCard::FWATCard WATCardOffice::create(unsigned int sid, unsigned int amount){				//create future watcard
 	Job* newJob = new Job(sid, 0, amount);
 	jobQueue.push(newJob);
 	printer.print(Printer::WATCardOffice,'C',sid,amount);
@@ -34,7 +34,7 @@ WATCard::FWATCard WATCardOffice::create(unsigned int sid, unsigned int amount){
 	return newJob->result;
 }
 
-WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount, WATCard* card){
+WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount, WATCard* card){	//tranfer  money onto input card
 	unsigned int cardBalance = card->getBalance();
 	Job* newJob = new Job(sid, cardBalance, amount);
 	jobQueue.push(newJob);
@@ -44,7 +44,7 @@ WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount,
 	return newJob->result;
 }
 
-WATCardOffice::Job* WATCardOffice::requestWork(){
+WATCardOffice::Job* WATCardOffice::requestWork(){											//couriers request work and unblock when work available for them
 	if(jobQueue.size() == 0){
 		jobAvailableCondition.wait();
 		if(isClosing){
@@ -60,10 +60,10 @@ WATCardOffice::Job* WATCardOffice::requestWork(){
 
 void WATCardOffice::main(){
 	printer.print(Printer::WATCardOffice,'S');
-	while(true){
+	while(true){																			//loop while destructor not called
 		_Accept(~WATCardOffice){
 			isClosing=true;
-			for(unsigned int i = 0; i < numCouriers; i++){
+			for(unsigned int i = 0; i < numCouriers; i++){									//if destructor called delete couriers prior to office
 				jobAvailableCondition.signalBlock();
 			}
 			break;
@@ -81,7 +81,7 @@ void WATCardOffice::main(){
 	printer.print(Printer::WATCardOffice,'F');
 }
 
-WATCardOffice::Job::Job(unsigned int sid, unsigned int cardBalance, unsigned int withdrawalAmount) {
+WATCardOffice::Job::Job(unsigned int sid, unsigned int cardBalance, unsigned int withdrawalAmount) {	//Job holds information for courier tasks
 	this->sid = sid;
 	this->cardBalance = cardBalance;
 	this->withdrawalAmount = withdrawalAmount;
@@ -96,22 +96,22 @@ printer(prt){
 
 void WATCardOffice::Courier::main(){
 	printer.print(Printer::Courier,id,'S');
-	while(true){
-		Job* newJob = cardOffice.requestWork();
+	while(true){																						//courier main loop until office is closing
+		Job* newJob = cardOffice.requestWork();															//request work from office
 	
 		if(newJob == NULL){
 			break;
 		}
 		printer.print(Printer::Courier,id,'t',newJob->sid,newJob->withdrawalAmount);
 		bank.withdraw(newJob->sid, newJob->withdrawalAmount);
-		
+																										//withdraw money from back to place on new watcard
 		WATCard* newWATCard = new WATCard();
 		newWATCard->deposit(newJob->withdrawalAmount);
 		newWATCard->deposit(newJob->cardBalance);
 
 		unsigned int cardDropChance = rng(0, 5);
 
-		if(cardDropChance > 0){
+		if(cardDropChance > 0){																			//check if courier loses watcard and place value in future
 			newJob->result.delivery(newWATCard);
 		}
 		else{
