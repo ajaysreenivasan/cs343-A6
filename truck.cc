@@ -16,7 +16,7 @@ printer(prt),
 }
 
 Truck::~Truck(){
-	delete cargo;
+	delete[] cargo;
 }
 
 // main method

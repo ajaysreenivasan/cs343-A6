@@ -45,7 +45,6 @@ void NameServer::main(){
 	printer.print(Printer::NameServer,'S');
 	while(true){	//loop infinitely until destructor called
 		_Accept(~NameServer){
-			cout<<"NSCLO\n";
 			break;
 		}
 		or _When(vendingMachineIndex < numVendingMachines)
