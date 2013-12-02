@@ -29,8 +29,7 @@ void Student::main(){
 			watcard=fWATCard();
 			watCardLost=false;
 		}
-		catch(WATCardOffice::Lost* e){
-			delete e;
+		catch(WATCardOffice::Lost){
 			printer.print(Printer::Student,id,'L');
 			watCardLost=true;									//new watcard was lost retry creating with 5$
 		}
@@ -63,8 +62,7 @@ void Student::main(){
 				fWATCard=cardOffice.transfer(id,vmLocation->cost()+5,watcard);
 				watcard=fWATCard();
 			}
-			catch(WATCardOffice::Lost* e){
-				delete e;
+			catch(WATCardOffice::Lost){
 				printer.print(Printer::Student,id,'L');
 				watCardLost=true;												//watcard lost, create new watcard
 				while(watCardLost){
@@ -73,9 +71,7 @@ void Student::main(){
 						watcard=fWATCard();
 						watCardLost=false;
 					}
-					catch(WATCardOffice::Lost* e1){
-						delete e1;
-						delete fWATCard;
+					catch(WATCardOffice::Lost){
 						printer.print(Printer::Student,id,'L');
 						watCardLost=true;									//new watcard was lost retry creating with 5$
 					}
