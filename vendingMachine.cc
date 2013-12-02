@@ -16,8 +16,6 @@ printer(prt),
 	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		sodaInventory[i] = 0;
 	}
-
-	nameServer.VMregister(this);
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
@@ -59,6 +57,8 @@ _Nomutex unsigned int VendingMachine::getId(){
 
 void VendingMachine::main(){
 	printer.print(Printer::Vending,id,'S',sodaCost);
+
+	nameServer.VMregister(this);
 	while(true){
 		_Accept(buy){
 

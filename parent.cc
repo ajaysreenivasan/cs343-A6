@@ -19,7 +19,7 @@ void Parent::main(){
 			unsigned int depositRecipient = rng(0, numStudents - 1);
 			unsigned int depositAmount = rng(1, 3);
 			yield(parentalDelay);
-			printer.print(Printer::Parent,'D',depositRecipient,depositRecipient);
+			printer.print(Printer::Parent,'D',depositRecipient,depositAmount);
 			bank.deposit(depositRecipient, depositAmount);
 		}
 	}

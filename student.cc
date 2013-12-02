@@ -21,6 +21,8 @@ void Student::main(){
 	while(watCardLost){												//possible that watcard is lost by courier . need to account for this
 		try{
 			fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
+			fWATCard();
+			watCardLost=false;
 		}
 		catch(WATCardOffice::Lost){
 			printer.print(Printer::Student,id,'L');
@@ -53,6 +55,7 @@ void Student::main(){
 		//block while update to funds is made need to account for different cases here
 			try{
 				fWATCard=cardOffice.transfer(id,vmLocation->cost()+5,fWATCard());
+				fWATCard();
 			}
 			catch(WATCardOffice::Lost){
 				printer.print(Printer::Student,id,'L');
@@ -60,6 +63,8 @@ void Student::main(){
 				while(watCardLost){
 					try{
 						fWATCard = cardOffice.create(id, 5);					//create new watCard for student with 5$
+						fWATCard();
+						watCardLost=false;
 					}
 					catch(WATCardOffice::Lost){
 						printer.print(Printer::Student,id,'L');

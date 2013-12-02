@@ -33,7 +33,7 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
 			cout<<"Mach"<<(idCounter++)-numStudents;
 		}
 		else if(i<5+numVendingMachines+numStudents+numCouriers){
-			cout<<"Mach"<<(idCounter++)-numStudents-numVendingMachines;
+			cout<<"Cour"<<(idCounter++)-numStudents-numVendingMachines;
 		}
 		buffer.push_back("");
 		cout<<"\t";
@@ -62,14 +62,14 @@ void Printer::printDebug(unsigned int i){
 	else if(i==4){
 		cout<<"Plant";
 	}
-	else if(i<5+numStudents){
-		cout<<"Stud"<<i-numStudents;
+	else if(i>=5 && i<5+numStudents){
+		cout<<"Stud"<<i-5;
 	}
-	else if(i<5+numVendingMachines+numStudents){
-		cout<<"Mach"<<i-numStudents-numVendingMachines;
+	else if(i>=5+numStudents && i<5+numVendingMachines+numStudents){
+		cout<<"Mach"<<i-5-numStudents;
 	}
-	else if(i<5+numVendingMachines+numStudents+numCouriers){
-		cout<<"Mach"<<i-numStudents-numVendingMachines-numCouriers;
+	else if(i>=5+numVendingMachines+numStudents){
+		cout<<"Cour"<<i-5-numStudents-numVendingMachines;
 	}
 	cout<<endl;
 }
@@ -145,7 +145,7 @@ void Printer::finish(unsigned int index){				//flushes all buffers then prints f
 
 void Printer::print( Kind kind, char state ){
 	unsigned int curId=getIndex(kind);
-	printDebug(curId);
+	//printDebug(curId);
 	if(state=='F'){
 		finish(curId);
 	}
@@ -160,7 +160,7 @@ void Printer::print( Kind kind, char state ){
 
 void Printer::print( Kind kind, char state, int value1 ){
 	unsigned int curId=getIndex(kind);
-	printDebug(curId);
+	//printDebug(curId);
 	stringstream ss;
 	string bufferValue="";
 	string stateString="";
@@ -174,7 +174,7 @@ void Printer::print( Kind kind, char state, int value1 ){
 
 void Printer::print( Kind kind, char state, int value1, int value2 ){
 	unsigned int curId=getIndex(kind);
-	printDebug(curId);
+	//printDebug(curId);
 	stringstream ss;
 	string bufferValue="";
 	string stateString="";
@@ -190,7 +190,7 @@ void Printer::print( Kind kind, char state, int value1, int value2 ){
 
 void Printer::print( Kind kind, unsigned int lid, char state ){
 	unsigned int curId=getIndex(kind,lid);
-	printDebug(curId);
+	//printDebug(curId);
 	if(state=='F'){
 		finish(curId);
 	}
@@ -204,8 +204,8 @@ void Printer::print( Kind kind, unsigned int lid, char state ){
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
-	unsigned int curId=getIndex(kind);
-	printDebug(curId);
+	unsigned int curId=getIndex(kind,lid);
+	//printDebug(curId);
 	stringstream ss;
 	string bufferValue="";
 	string stateString="";
@@ -220,8 +220,8 @@ void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1, int value2 ){
-	unsigned int curId=getIndex(kind);
-	printDebug(curId);
+	unsigned int curId=getIndex(kind,lid);
+	//printDebug(curId);
 	stringstream ss;
 	string bufferValue="";
 	string stateString="";
