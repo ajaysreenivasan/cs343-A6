@@ -1,7 +1,5 @@
 #include "printer.h"
 #include <iostream>
-#include <sstream>
-#include <string>
 
 using namespace std;
 
@@ -10,7 +8,13 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
 	this->numVendingMachines = numVendingMachines;
 	this->numCouriers = numCouriers;
 	int idCounter =0;
-	for(unsigned int i =0;i<numStudents+numVendingMachines+numCouriers+5;i++){
+
+	this->size=numStudents+numVendingMachines+numCouriers+5;
+	stateBuffer = new char[size];
+	value1Buffer= new int[size];
+	value2Buffer=new int[size];
+
+	for(unsigned int i =0;i<size;i++){
 		if(i==0){
 			cout<<"Parent";
 		}
@@ -35,14 +39,23 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
 		else if(i<5+numVendingMachines+numStudents+numCouriers){
 			cout<<"Cour"<<(idCounter++)-numStudents-numVendingMachines;
 		}
-		buffer.push_back("");
+		stateBuffer[i]='%';
+		value1Buffer[i]=-1;
+		value2Buffer[i]=-1;
 		cout<<"\t";
 	}
 	cout<<endl;
-	for(unsigned int i =0;i<buffer.size();i++){
+	for(unsigned int i =0;i<size;i++){
 		cout<<"*******\t";
 	}
 	cout<<endl;
+}
+
+Printer::~Printer(){
+	delete[] stateBuffer;
+	delete[] value1Buffer;
+	delete[] value2Buffer;
+	cout<<"***********************\n";
 }
 
 void Printer::printDebug(unsigned int i){
@@ -116,23 +129,45 @@ unsigned int Printer::getIndex(Kind kind, unsigned int lid){
 }
 
 void Printer::flushLine(){
-	for(unsigned int i=0;i<buffer.size();i++){
-		cout<<buffer[i]<<"\t";
-		buffer[i]="";
+	for(unsigned int i=0;i<size;i++){
+		if(stateBuffer[i]!='%'){
+			cout<<stateBuffer[i];
+			if(value1Buffer[i]!=-1){
+				cout<<value1Buffer[i];
+				if(value2Buffer[i]!=-1){
+					cout<<","<<value2Buffer[i];
+				}
+			}
+		}
+		cout<<"\t";
+		stateBuffer[i]='%';
+		value1Buffer[i]=-1;
+		value2Buffer[i]=-1;
 	}
 	cout<<endl;
 }
 
-void Printer::updateBuffer(unsigned int index, string newValue){	//checks if buffer needs to be flushed
-	if(buffer[index]!=""){
+void Printer::updateBuffer(unsigned int index, char state){
+	updateBuffer(index, state, -1, -1);
+}
+
+void Printer::updateBuffer(unsigned int index, char state, int value1){
+	updateBuffer(index, state, value1,-1);
+}
+
+
+void Printer::updateBuffer(unsigned int index, char state, int value1, int value2){	//checks if buffer needs to be flushed
+	if(stateBuffer[index]!='%'){
 		flushLine();
 	}
-	buffer[index]=newValue;											//updates buffer value
+	stateBuffer[index]=state;											//updates buffer value
+	value1Buffer[index]=value1;
+	value2Buffer[index]=value2;
 }
 
 void Printer::finish(unsigned int index){				//flushes all buffers then prints finish message
 	flushLine();										//for given index
-	for(unsigned int i=0; i<buffer.size();i++){
+	for(unsigned int i=0; i<size;i++){
 		if(i==index){
 			cout<<"F\t";
 		}
@@ -150,42 +185,20 @@ void Printer::print( Kind kind, char state ){
 		finish(curId);
 	}
 	else{
-		stringstream ss;
-		string bufferValue="";
-		ss<<state;
-		ss>>bufferValue;
-		updateBuffer(curId,bufferValue);
+		updateBuffer(curId,state);
 	}
 }
 
 void Printer::print( Kind kind, char state, int value1 ){
 	unsigned int curId=getIndex(kind);
 	//printDebug(curId);
-	stringstream ss;
-	string bufferValue="";
-	string stateString="";
-	string value1String="";
-	ss<<state<<" "<<value1;
-	ss>>stateString;
-	ss>>value1String;
-	bufferValue=stateString+value1String;
-	updateBuffer(curId,bufferValue);
+	updateBuffer(curId,state,value1);
 }
 
 void Printer::print( Kind kind, char state, int value1, int value2 ){
 	unsigned int curId=getIndex(kind);
 	//printDebug(curId);
-	stringstream ss;
-	string bufferValue="";
-	string stateString="";
-	string value1String="";
-	string value2String="";
-	ss<<state<<" "<<value1<<" "<<value2;
-	ss>>stateString;
-	ss>>value1String;
-	ss>>value2String;
-	bufferValue=stateString+value1String+","+value2String;
-	updateBuffer(curId,bufferValue);
+	updateBuffer(curId,state,value1,value2);
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state ){
@@ -195,44 +208,20 @@ void Printer::print( Kind kind, unsigned int lid, char state ){
 		finish(curId);
 	}
 	else{
-		stringstream ss;
-		string bufferValue="";
-		ss<<state;
-		ss>>bufferValue;
-		updateBuffer(curId,bufferValue);
+		updateBuffer(curId,state);
 	}
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
 	unsigned int curId=getIndex(kind,lid);
 	//printDebug(curId);
-	stringstream ss;
-	string bufferValue="";
-	string stateString="";
-	string value1String="";
-	string value2String="";
-	ss<<state<<" "<<value1;
-	ss>>stateString;
-	ss>>value1String;
-	ss>>value2String;
-	bufferValue=stateString+value1String;
-	updateBuffer(curId,bufferValue);
+	updateBuffer(curId,state,value1);
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1, int value2 ){
 	unsigned int curId=getIndex(kind,lid);
 	//printDebug(curId);
-	stringstream ss;
-	string bufferValue="";
-	string stateString="";
-	string value1String="";
-	string value2String="";
-	ss<<state<<" "<<value1<<" "<<value2;
-	ss>>stateString;
-	ss>>value1String;
-	ss>>value2String;
-	bufferValue=stateString+value1String+","+value2String;
-	updateBuffer(curId,bufferValue);
+	updateBuffer(curId,state,value1,value2);
 }
 
 // comment

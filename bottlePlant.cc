@@ -43,7 +43,7 @@ void BottlingPlant::main(){											//loop while not closing
 		yield(timeBetweenShipments);								//yield time between shipments
 		unsigned int bottleCount=0;
 		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){			//ermmm .... how are shipments tied to truck?
-			shipment[i] = rng(0, maxStockPerFlavour-1);
+			shipment[i] = rng(0, maxStockPerFlavour);
 			bottleCount+=shipment[i];
 		}
 		printer.print(Printer::BottlingPlant,'G', bottleCount);
@@ -56,10 +56,11 @@ void BottlingPlant::main(){											//loop while not closing
 		_Accept(getShipment){
 		}
 	}
-	printer.print(Printer::BottlingPlant,'F');
+	
 	_Accept(getShipment)
 	{
 	}
+	printer.print(Printer::BottlingPlant,'F');
 }
 
 // comment

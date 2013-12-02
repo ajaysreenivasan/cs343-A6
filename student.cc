@@ -1,5 +1,6 @@
 #include "student.h"
 #include "vendingMachine.h"
+#include "watcard.h"
 #include "watCardOffice.h"
 #include <iostream>
 
@@ -87,6 +88,7 @@ void Student::main(){
 
 	//all soda planned to purchase is purchased terminate
 	printer.print(Printer::Student,id,'F');
+	delete watcard;
 }
 
 // comment

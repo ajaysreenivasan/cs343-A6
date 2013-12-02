@@ -40,7 +40,7 @@ WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount,
 	jobQueue.push(newJob);
 	printer.print(Printer::WATCardOffice,'T',sid,amount);
 	jobAvailableCondition.signal();
-
+	delete card;
 	return newJob->result;
 }
 
@@ -64,7 +64,7 @@ void WATCardOffice::main(){
 		_Accept(~WATCardOffice){
 			isClosing=true;
 			for(unsigned int i = 0; i < numCouriers; i++){
-				jobAvailableCondition.signal();
+				jobAvailableCondition.signalBlock();
 			}
 			break;
 		}
@@ -116,10 +116,10 @@ void WATCardOffice::Courier::main(){
 		}
 		else{
 			newJob->result.exception(new WATCardOffice::Lost);
+			delete newWATCard;
 		}
 		printer.print(Printer::Courier,id,'T',newJob->sid,newJob->withdrawalAmount);
 		delete newJob;
-		delete newWATCard;
 	}
 	printer.print(Printer::Courier,id,'F');
 }

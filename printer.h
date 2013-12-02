@@ -2,8 +2,6 @@
 #define PRINTER_H
 
 #include <uC++.h>
-#include <string>
-#include <vector>
 
 _Monitor Printer {
 public:
@@ -11,6 +9,7 @@ public:
 
 public:
 	Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers);
+	~Printer();
 	void print(Kind kind, char state);
 	void print(Kind kind, char state, int value1);
 	void print(Kind kind, char state, int value1, int value2);
@@ -20,7 +19,9 @@ public:
 
 private:
 	void flushLine();
-	void updateBuffer(unsigned int index, std::string newValue);
+	void updateBuffer(unsigned int index, char state);
+	void updateBuffer(unsigned int index, char state, int value1);
+	void updateBuffer(unsigned int index, char state, int value1, int value2);
 	void finish(unsigned int index);
 	unsigned int getIndex(Kind kind);
 	unsigned int getIndex(Kind kind, unsigned int lid);
@@ -31,7 +32,10 @@ private:
 	unsigned int numVendingMachines;
 	unsigned int numCouriers;
 	Printer::Kind kind;
-	std::vector<std::string> buffer;
+	char* stateBuffer;
+	int* value1Buffer;
+	int* value2Buffer;
+	unsigned int size;
 };
 
 #endif

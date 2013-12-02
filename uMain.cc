@@ -77,8 +77,7 @@ void uMain::main(){
 	delete parent;
 	delete bank;
 	delete printer;
-
-	cout<<"***********************\n";
+	
 	return;
 }
 
