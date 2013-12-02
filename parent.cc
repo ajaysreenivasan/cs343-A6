@@ -15,7 +15,7 @@ void Parent::main(){
 			break;
 		}
 		_Else{
-			unsigned int depositRecipient = rng(0, numStudents);
+			unsigned int depositRecipient = rng(0, numStudents - 1);
 			unsigned int depositAmount = rng(1, 3);
 			yield(parentalDelay);
 			bank.deposit(depositRecipient, depositAmount);
