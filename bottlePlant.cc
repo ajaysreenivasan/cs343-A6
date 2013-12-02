@@ -12,9 +12,8 @@ BottlingPlant::BottlingPlant(Printer& prt, NameServer& nameServer, unsigned int 
 	this->maxStockPerFlavour = maxStockPerFlavour;
 	this->timeBetweenShipments = timeBetweenShipments;
 
-	this->maxFlavourCount = 4; 										// Given in assignment. Look into changing it from magic # maybe.
 	this->isClosing = false;
-	this->shipment = new unsigned int[maxFlavourCount];				//creating shippment
+	this->shipment = new unsigned int[VendingMachine::MAXFLAVOURCOUNT];				//creating shippment
 	this->shippingTruck = new Truck(printer, nameServer, *this,		//creating truck
 		numVendingMachines, maxStockPerFlavour);
 }
@@ -28,7 +27,7 @@ bool BottlingPlant::getShipment(unsigned int cargo[]){				//if plant closing dow
 		return true;
 	}
 	else{															//else copy shipment into the truck and return false
-		for(unsigned int i = 0; i < maxFlavourCount; i++){
+		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 			cargo[i] = shipment[i];
 			shipment[i] = 0;
 		}
@@ -41,7 +40,7 @@ void BottlingPlant::main(){											//loop while not closing
 	while(true){
 		yield(timeBetweenShipments);								//yield time between shipments
 
-		for(unsigned int i = 0; i < maxFlavourCount; i++){			//ermmm .... how are shipments tied to truck?
+		for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){			//ermmm .... how are shipments tied to truck?
 			shipment[i] = rng(0, maxStockPerFlavour);
 		}
 

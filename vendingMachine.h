@@ -7,7 +7,7 @@
 
 _Task VendingMachine {
 public:
-	enum Flavours {Smirnoff, Greygoose, Absolut, Belvedere, MaxFlavourCount};    // flavours of soda (YOU DEFINE)
+	enum Flavours {Smirnoff, Greygoose, Absolut, Belvedere, MAXFLAVOURCOUNT};    // flavours of soda (YOU DEFINE)
 	enum Status {BUY, STOCK, FUNDS};									// purchase status: successful buy, out of stock, insufficient funds
 
 public:
@@ -28,7 +28,6 @@ private:
 	unsigned int id;
 	unsigned int sodaCost;
 	unsigned int* sodaInventory;
-	unsigned int maxFlavourCount;
 };
 
 #endif

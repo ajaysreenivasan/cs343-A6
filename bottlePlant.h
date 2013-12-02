@@ -6,6 +6,7 @@
 #include "printer.h"
 #include "nameServer.h"
 #include "truck.h"
+#include "vendingMachine.h"
 
 extern MPRNG rng;
 
@@ -29,7 +30,6 @@ private:
 	unsigned int maxShippedPerFlavour;
 	unsigned int maxStockPerFlavour;
 	unsigned int timeBetweenShipments;
-	unsigned int maxFlavourCount;
 	bool isClosing;
 	unsigned int* shipment;
 	Truck* shippingTruck;

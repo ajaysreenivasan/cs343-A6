@@ -11,9 +11,7 @@ printer(prt),
 	this->id = id;
 	this->sodaCost = sodaCost;
 
-	this->maxFlavourCount = int(VendingMachine::MaxFlavourCount);
-
-	for(unsigned int i = 0; i < maxFlavourCount; i++){
+	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		sodaInventory[i] = 0;
 	}
 
@@ -63,8 +61,9 @@ void VendingMachine::main(){
 			
 			}
 		}
+		or
+		_Accept(~VendingMachine){
+			break;
+		}
 	}
 }
-
-
-// comment
