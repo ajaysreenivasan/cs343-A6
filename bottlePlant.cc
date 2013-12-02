@@ -20,6 +20,7 @@ BottlingPlant::BottlingPlant(Printer& prt, NameServer& nameServer, unsigned int 
 
 BottlingPlant::~BottlingPlant(){									//deconstructor
 	delete shipment;
+	delete shippingTruck;
 }
 
 bool BottlingPlant::getShipment(unsigned int cargo[]){				//if plant closing down return true
@@ -53,11 +54,12 @@ void BottlingPlant::main(){											//loop while not closing
 		}
 		or
 		_Accept(getShipment){
-			if(isClosing)
-				delete shippingTruck;
 		}
 	}
 	printer.print(Printer::BottlingPlant,'F');
+	_Accept(getShipment)
+	{
+	}
 }
 
 // comment

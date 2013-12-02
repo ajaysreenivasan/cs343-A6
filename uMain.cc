@@ -37,7 +37,6 @@ void uMain::main(){
 	processConfigFile(inputFile,cp);																			//create specified tasks in correct order
 	Printer* printer = new Printer(cp.numStudents,cp.numVendingMachines,cp.numCouriers);
 	
-	cout << cp.numStudents << endl;
 	Bank* bank = new Bank(cp.numStudents);
 	
 	Parent* parent = new Parent(*printer, *bank, cp.numStudents, cp.parentalDelay);
