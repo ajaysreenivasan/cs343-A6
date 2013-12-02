@@ -11,8 +11,7 @@ printer(prt),
 	this->numVendingMachines = numVendingMachines;
 	this->maxStockPerFlavour = maxStockPerFlavour;
 
-	this->maxFlavourCount = 4;
-	this->cargo = new unsigned int[maxFlavourCount];
+	this->cargo = new unsigned int[VendingMachine::MAXFLAVOURCOUNT];
 	this->hasCargo = false;
 }
 
@@ -42,7 +41,7 @@ void Truck::main(){
 
 			unsigned int restockRequirement;
 
-			for(unsigned int i = 0; i < maxFlavourCount; i++){
+			for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 				if(vendingMachineInventory[i] < maxStockPerFlavour){
 					restockRequirement = maxStockPerFlavour - vendingMachineInventory[i];
 					if(cargo[i] >= restockRequirement)
@@ -60,7 +59,7 @@ void Truck::main(){
 
 void Truck::checkCargo(){
 	int stockCount = 0;
-	for(unsigned int i = 0; i < maxFlavourCount; i++){
+	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		stockCount += cargo[i];
 	}
 
@@ -69,7 +68,3 @@ void Truck::checkCargo(){
 	else
 		this->hasCargo = true;
 }
-
-
-// comment
-// comment

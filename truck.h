@@ -23,7 +23,6 @@ private:
 	BottlingPlant& plant;
 	unsigned int numVendingMachines;
 	unsigned int maxStockPerFlavour;
-	unsigned int maxFlavourCount;
 	unsigned int* cargo;
 	bool hasCargo;
 };
