@@ -1,6 +1,8 @@
 #include "watCardOffice.h"
 #include "watcard.h"
+#include <iostream>
 
+using namespace std;
 // constructor
 WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers):
 	printer(prt),
@@ -12,6 +14,7 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers)
 	for(unsigned int i = 0; i < numCouriers; i++){
 		courierList[i] = new Courier(bank, *this, printer,i);
 	}
+	isClosing=false;
 
 }
 
@@ -44,6 +47,9 @@ WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount,
 WATCardOffice::Job* WATCardOffice::requestWork(){
 	if(jobQueue.size() == 0){
 		jobAvailableCondition.wait();
+		if(isClosing){
+			return NULL;
+		}
 	}
 
 	Job* job = jobQueue.front();
@@ -56,10 +62,10 @@ void WATCardOffice::main(){
 	printer.print(Printer::WATCardOffice,'S');
 	while(true){
 		_Accept(~WATCardOffice){
+			isClosing=true;
 			for(unsigned int i = 0; i < numCouriers; i++){
 				jobAvailableCondition.signal();
 			}
-
 			break;
 		}
 		or

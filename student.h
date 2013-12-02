@@ -7,6 +7,7 @@
 #include "nameServer.h"
 #include "watCardOffice.h"
 #include "watcard.h"
+#include "vendingMachine.h"
 
 extern MPRNG rng;
 
@@ -26,6 +27,7 @@ private:
 	unsigned int maxPurchases;
 	unsigned int numToPurchase;
 	WATCard::FWATCard fWATCard;
+	VendingMachine::Flavours favouriteFlavour;
 };
 
 #endif

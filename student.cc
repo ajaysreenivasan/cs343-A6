@@ -2,6 +2,9 @@
 #include "vendingMachine.h"
 #include "watCardOffice.h"
 #include <iostream>
+
+using namespace std;
+
 Student::Student(Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice, unsigned int id,
 				 unsigned int maxPurchases):
 									printer(prt),
@@ -10,12 +13,12 @@ Student::Student(Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice
 									maxPurchases(maxPurchases)
 {
 	this->id = id;
+	numToPurchase = rng(1, maxPurchases); 	//random number bottles to purchase between 1 and maxPurchases			 	
+	favouriteFlavour = (VendingMachine::Flavours)rng(3); //random favorite flavour between [0,3]
+	
 }
 
 void Student::main(){
-	
-	numToPurchase = rng(1, maxPurchases); 	//random number bottles to purchase between 1 and maxPurchases			 	
-	VendingMachine::Flavours favouriteFlavour = (VendingMachine::Flavours)rng(3); //random favorite flavour between [0,3]
 	printer.print(Printer::Student,id,'S', (int)favouriteFlavour,numToPurchase);
 	//this should be a flavour
 	bool watCardLost=true;					//set to true to do initial create
@@ -78,7 +81,6 @@ void Student::main(){
 		}
 		else{	//stat == BUY successfully purchased soda
 			numToPurchase--;
-			std::cout << "fuckoff" << std::endl;
 			printer.print(Printer::Student,id,'B',fWATCard()->getBalance());
 		}
 	}//end purchase while loop

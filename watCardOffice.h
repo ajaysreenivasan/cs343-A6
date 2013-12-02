@@ -55,6 +55,7 @@ private:
 	Courier** courierList;
 	std::queue<Job*> jobQueue;
 	uCondition jobAvailableCondition;
+	bool isClosing;
 };
 
 #endif

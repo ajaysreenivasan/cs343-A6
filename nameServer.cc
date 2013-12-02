@@ -1,6 +1,7 @@
 #include "nameServer.h"
 #include "vendingMachine.h"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -44,16 +45,13 @@ void NameServer::main(){
 	printer.print(Printer::NameServer,'S');
 	while(true){	//loop infinitely until destructor called
 		_Accept(~NameServer){
+			cout<<"NSCLO\n";
 			break;
 		}
-		_Else{
-			if(vendingMachineIndex < numVendingMachines){ 
-				_Accept(VMregister){}
-			}
-			else{
-				_Accept(getMachine, getMachineList){}
-			}
-		}
+		or _When(vendingMachineIndex < numVendingMachines)
+			_Accept(VMregister){}
+		or _When(!vendingMachineIndex < numVendingMachines)
+			_Accept(getMachine, getMachineList){}
 	}
 	printer.print(Printer::NameServer,'F');
 }
