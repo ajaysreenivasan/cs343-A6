@@ -1,5 +1,6 @@
 #include "vendingMachine.h"
 #include "printer.h"
+#include <iostream>
 
 using namespace std;
 
@@ -11,11 +12,17 @@ printer(prt),
 	this->id = id;
 	this->sodaCost = sodaCost;
 
+	this->sodaInventory = new unsigned int[VendingMachine::MAXFLAVOURCOUNT];
 	for(unsigned int i = 0; i < VendingMachine::MAXFLAVOURCOUNT; i++){
 		sodaInventory[i] = 0;
 	}
 
+	cout << "GARBAGE" << endl;
+
 	nameServer.VMregister(this);
+
+	
+	cout << "TRASH" << endl;
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
