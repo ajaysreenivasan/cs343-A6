@@ -53,7 +53,6 @@ void NameServer::main(){
 			else{
 				_Accept(getMachine, getMachineList){}
 			}
-			printer.print(Printer::NameServer,'S');
 		}
 	}
 	printer.print(Printer::NameServer,'F');
