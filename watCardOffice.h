@@ -34,13 +34,14 @@ private:
 	};
 	_Task Courier {							// communicates with bank
 	public:
-		Courier(Bank& bank, WATCardOffice& cardOffice, Printer& printer);
+		Courier(Bank& bank, WATCardOffice& cardOffice, Printer& printer,unsigned int id);
 	private:
 		void main();
 
 		Bank& bank;
 		WATCardOffice& cardOffice;
 		Printer& printer;
+		unsigned int id;
 	};					 
 
 private:

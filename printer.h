@@ -24,6 +24,7 @@ private:
 	void finish(unsigned int index);
 	unsigned int getIndex(Kind kind);
 	unsigned int getIndex(Kind kind, unsigned int lid);
+	void printDebug(unsigned int i);
 
 private:
 	unsigned int numStudents;

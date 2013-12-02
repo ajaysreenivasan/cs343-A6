@@ -10,7 +10,7 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank, unsigned int numCouriers)
 
 	courierList = new Courier*[numCouriers];
 	for(unsigned int i = 0; i < numCouriers; i++){
-		courierList[i] = new Courier(bank, *this, printer);
+		courierList[i] = new Courier(bank, *this, printer,i);
 	}
 
 }
@@ -81,22 +81,22 @@ WATCardOffice::Job::Job(unsigned int sid, unsigned int cardBalance, unsigned int
 	this->withdrawalAmount = withdrawalAmount;
 }
 
-WATCardOffice::Courier::Courier(Bank& bank, WATCardOffice& cardOffice,Printer& prt):
+WATCardOffice::Courier::Courier(Bank& bank, WATCardOffice& cardOffice,Printer& prt,unsigned int id):
 bank(bank),
 cardOffice(cardOffice),
 printer(prt){
-	
+	this->id=id;
 }
 
 void WATCardOffice::Courier::main(){
-	printer.print(Printer::Courier,'S');
+	printer.print(Printer::Courier,id,'S');
 	while(true){
 		Job* newJob = cardOffice.requestWork();
 	
 		if(newJob == NULL){
 			break;
 		}
-		printer.print(Printer::Courier,'t',newJob->sid,newJob->withdrawalAmount);
+		printer.print(Printer::Courier,id,'t',newJob->sid,newJob->withdrawalAmount);
 		bank.withdraw(newJob->sid, newJob->withdrawalAmount);
 		
 		WATCard* newWATCard = new WATCard();
@@ -111,8 +111,8 @@ void WATCardOffice::Courier::main(){
 		else{
 			newJob->result.exception(new WATCardOffice::Lost);
 		}
-		printer.print(Printer::Courier,'T',newJob->sid,newJob->withdrawalAmount);
+		printer.print(Printer::Courier,id,'T',newJob->sid,newJob->withdrawalAmount);
 		delete newJob;
 	}
-	printer.print(Printer::Courier,'F');
+	printer.print(Printer::Courier,id,'F');
 }

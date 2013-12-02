@@ -25,9 +25,9 @@ VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 		if(card.getBalance() >= sodaCost){
 			sodaInventory[flavour] -= 1;
 			card.withdraw(sodaCost);
-			
-			printer.print(Printer::Vending,'B',
-				(unsigned int)flavour,sodaInventory[flavour]);
+
+			printer.print(Printer::Vending,id,'B',
+				flavour,sodaInventory[flavour]);
 
 			return VendingMachine::BUY;
 		}
@@ -41,12 +41,12 @@ VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard& card){
 }
 
 unsigned int* VendingMachine::inventory(){
-	printer.print(Printer::Vending,'r');
+	printer.print(Printer::Vending,id,'r');
 	return sodaInventory;
 }
 
 void VendingMachine::restocked(){
-	printer.print(Printer::Vending,'R');
+	printer.print(Printer::Vending,id,'R');
 }
 
 _Nomutex unsigned int VendingMachine::cost(){
@@ -58,7 +58,7 @@ _Nomutex unsigned int VendingMachine::getId(){
 }
 
 void VendingMachine::main(){
-	printer.print(Printer::Vending,'S',sodaCost);
+	printer.print(Printer::Vending,id,'S',sodaCost);
 	while(true){
 		_Accept(buy){
 
@@ -74,5 +74,5 @@ void VendingMachine::main(){
 			break;
 		}
 	}
-	printer.print(Printer::Vending,'S');
+	printer.print(Printer::Vending,id,'F');
 }
