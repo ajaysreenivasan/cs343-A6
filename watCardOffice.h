@@ -11,16 +11,17 @@
 
 extern MPRNG rng;
 
+// watcardoffice declaration 
 _Task WATCardOffice {
 private:
 	struct Job;
 
 public:
 	_Event Lost {};                        // uC++ exception type, like "struct"
-	WATCardOffice(Printer& prt, Bank &bank, unsigned int numCouriers);
-	~WATCardOffice();
-	WATCard::FWATCard create(unsigned int sid, unsigned int amount);
-	WATCard::FWATCard transfer(unsigned int sid, unsigned int amount, WATCard* card);
+	WATCardOffice(Printer& prt, Bank &bank, unsigned int numCouriers);		// constructor
+	~WATCardOffice();														// destructor
+	WATCard::FWATCard create(unsigned int sid, unsigned int amount);		// create a watcard
+	WATCard::FWATCard transfer(unsigned int sid, unsigned int amount, WATCard* card);	// transfer funds from an old card to new card
 	Job* requestWork();
 
 private:
@@ -28,9 +29,9 @@ private:
 		Job(unsigned int sid, unsigned int cardBalance, unsigned int withdrawalAmount);
 
 		WATCard::FWATCard result;          // return future
-		unsigned int sid;
-		unsigned int cardBalance;
-		unsigned int withdrawalAmount;
+		unsigned int sid;					// student id
+		unsigned int cardBalance;			// balance on card
+		unsigned int withdrawalAmount;		// amount to withdraw from bank
 	};
 	_Task Courier {							// communicates with bank
 	public:
@@ -41,7 +42,7 @@ private:
 		Bank& bank;
 		WATCardOffice& cardOffice;
 		Printer& printer;
-		unsigned int id;
+		unsigned int id;				// student id
 	};					 
 
 private:
@@ -51,13 +52,11 @@ private:
 	Printer& printer;
 	Bank& bank;
 	WATCard* card;
-	unsigned int numCouriers;
-	Courier** courierList;
-	std::queue<Job*> jobQueue;
-	uCondition jobAvailableCondition;
-	bool isClosing;
+	unsigned int numCouriers;				// # of couriers
+	Courier** courierList;					// tracks the couriers
+	std::queue<Job*> jobQueue;				// queues up jobs
+	uCondition jobAvailableCondition;		// blocks unless a job is available
+	bool isClosing;							// tracks if office is closing
 };
 
 #endif
-
-// comment

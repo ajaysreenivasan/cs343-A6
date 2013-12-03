@@ -11,9 +11,11 @@
 
 extern MPRNG rng;
 
+// declaration of Student
 _Task Student {
 public:
-	Student(Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice, unsigned int id,
+	// constructor
+	Student(Printer& prt, NameServer& nameServer, WATCardOffice& cardOffice, unsigned int id, 
 		unsigned int maxPurchases);
 
 private:
@@ -23,13 +25,11 @@ private:
 	Printer& printer;
 	NameServer& nameServer;
 	WATCardOffice& cardOffice;
-	unsigned int id;
-	unsigned int maxPurchases;
-	unsigned int numToPurchase;
-	WATCard::FWATCard fWATCard;
-	VendingMachine::Flavours favouriteFlavour;
+	unsigned int id;									// student id
+	unsigned int maxPurchases;							// # of sodas student will buy in total
+	unsigned int numToPurchase;							// # of sodas student has left to buy
+	WATCard::FWATCard fWATCard;							// watcard future
+	VendingMachine::Flavours favouriteFlavour;			// student's favourite flavour of soda
 };
 
 #endif
-
-// comment

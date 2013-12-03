@@ -4,13 +4,14 @@
 #include <uC++.h>
 #include <uFuture.h>
 
+// declaration of WATCard
 class WATCard {
 public:
-	WATCard();
+	WATCard();								// constructor
 	typedef Future_ISM<WATCard*> FWATCard; // future watcard pointer
-	void deposit(unsigned int amount);
-	void withdraw(unsigned int amount);
-	unsigned int getBalance();
+	void deposit(unsigned int amount);		// deposit money to a watcard from bank
+	void withdraw(unsigned int amount);		// withdraw money from watcard
+	unsigned int getBalance();				// return balance of this watcard
 
 private:
 	WATCard(const WATCard&);            // prevent copying

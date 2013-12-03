@@ -59,35 +59,35 @@ Printer::~Printer(){																						//deconstructor delete buffers
 }
 
 /*void Printer::printDebug(unsigned int i){																	//debug method used to determine what task is calling print
-	cout<<i<<endl;
-	if(i==0){
-		cout<<"Parent";
-	}
-	else if(i==1){
-		cout<<"WATOff";
-	}
-	else if(i==2){
-		cout<<"Names";
-	}
-	else if(i==3){
-		cout<<"Truck";
-	}
-	else if(i==4){
-		cout<<"Plant";
-	}
-	else if(i>=5 && i<5+numStudents){
-		cout<<"Stud"<<i-5;
-	}
-	else if(i>=5+numStudents && i<5+numVendingMachines+numStudents){
-		cout<<"Mach"<<i-5-numStudents;
-	}
-	else if(i>=5+numVendingMachines+numStudents){
-		cout<<"Cour"<<i-5-numStudents-numVendingMachines;
-	}
-	cout<<endl;
+cout<<i<<endl;
+if(i==0){
+cout<<"Parent";
+}
+else if(i==1){
+cout<<"WATOff";
+}
+else if(i==2){
+cout<<"Names";
+}
+else if(i==3){
+cout<<"Truck";
+}
+else if(i==4){
+cout<<"Plant";
+}
+else if(i>=5 && i<5+numStudents){
+cout<<"Stud"<<i-5;
+}
+else if(i>=5+numStudents && i<5+numVendingMachines+numStudents){
+cout<<"Mach"<<i-5-numStudents;
+}
+else if(i>=5+numVendingMachines+numStudents){
+cout<<"Cour"<<i-5-numStudents-numVendingMachines;
+}
+cout<<endl;
 }*/
 
-																				//Get the buffer index of kinds Parent, WATCardOffice, NameServer, Truck, BottlingPlant
+//Get the buffer index of kinds Parent, WATCardOffice, NameServer, Truck, BottlingPlant
 unsigned int Printer::getIndex(Kind kind){
 	if(kind==Parent){
 		return 0;
@@ -111,7 +111,7 @@ unsigned int Printer::getIndex(Kind kind){
 	}
 }
 
-																				//get the buffer index of kinds Student, Vending, Courier
+//get the buffer index of kinds Student, Vending, Courier
 unsigned int Printer::getIndex(Kind kind, unsigned int lid){
 	if(kind==Student){
 		return 5+lid;
@@ -157,7 +157,7 @@ void Printer::updateBuffer(unsigned int index, char state, int value1){			//upda
 
 
 void Printer::updateBuffer(unsigned int index, char state, int value1, int value2){	
-																				//checks if buffer needs to be flushed
+	//checks if buffer needs to be flushed
 	if(stateBuffer[index]!='%'){
 		flushLine();
 	}

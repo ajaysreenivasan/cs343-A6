@@ -12,13 +12,15 @@ extern MPRNG rng;
 
 _Task Truck;
 
+// declaration of bottlingplant
 _Task BottlingPlant {
 public:
+	// constructor
 	BottlingPlant(Printer& prt, NameServer& nameServer, unsigned int numVendingMachines,
 		unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour,
 		unsigned int timeBetweenShipments);
-	~BottlingPlant();
-	bool getShipment(unsigned int cargo[]);
+	~BottlingPlant();							// destructor
+	bool getShipment(unsigned int cargo[]);		// called by truck to pick up the shipment
 
 private:
 	void main();
@@ -26,15 +28,13 @@ private:
 private:
 	Printer& printer;
 	NameServer& nameServer;
-	unsigned int numVendingMachines;
-	unsigned int maxShippedPerFlavour;
+	unsigned int numVendingMachines;			// # of vending machines
+	unsigned int maxShippedPerFlavour;			// max # of sodas shipped per flavour
 	unsigned int maxStockPerFlavour;
-	unsigned int timeBetweenShipments;
-	bool isClosing;
-	unsigned int* shipment;
-	Truck* shippingTruck;
+	unsigned int timeBetweenShipments;			// time between each shipment
+	bool isClosing;								// tracks if the plant is closing
+	unsigned int* shipment;						// tracks shipments
+	Truck* shippingTruck;						// points to the delivery truck
 };
 
 #endif
-
-// comment

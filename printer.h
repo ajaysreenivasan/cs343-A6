@@ -3,6 +3,7 @@
 
 #include <uC++.h>
 
+// declaration of printer
 _Monitor Printer {
 public:
 	enum Kind {Parent, WATCardOffice, NameServer, Truck, BottlingPlant, Student, Vending, Courier};
@@ -39,5 +40,3 @@ private:
 };
 
 #endif
-
-// comment

@@ -8,24 +8,26 @@
 
 _Task VendingMachine;
 
+// declaration of NameServer
 _Task NameServer {
 public:
-	NameServer(Printer& prt, unsigned int numVendingMachines, unsigned int numStudents);
-	~NameServer();
-	void VMregister(VendingMachine* vendingmachine);
-	VendingMachine* getMachine(unsigned int id);
-	VendingMachine** getMachineList();
+	NameServer(Printer& prt, unsigned int numVendingMachines, unsigned int numStudents);	// constructor
+	~NameServer();																			// destructor
+	void VMregister(VendingMachine* vendingmachine);					// register VM with nameserver
+	VendingMachine* getMachine(unsigned int id);						// return a machine id 
+	VendingMachine** getMachineList();									// return the list of machines
 
 private:
 	void main();
 
 private:
 	Printer& printer;
-	unsigned int numVendingMachines;
-	unsigned int numStudents;
-	unsigned int vendingMachineIndex;
-	VendingMachine** vendingMachineList;
-	std::vector<int> studentNextMachineAssignment;									//used to keep track of what vendingMachine students should get next
+	unsigned int numVendingMachines;								// # of machines
+	unsigned int numStudents;										// total # of students
+	unsigned int vendingMachineIndex;								
+	VendingMachine** vendingMachineList;							// stores a list of pointers to vending machines
+	std::vector<int> studentNextMachineAssignment;					// used to keep track of what vendingMachine
+																	// students should get next
 };
 
 #endif
